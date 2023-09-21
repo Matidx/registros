@@ -1,23 +1,13 @@
-package com.guiatel.registros.entity;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+package com.guiatel.registros.dto;
 
 import java.time.LocalDate;
 
-@Entity
-public class Person {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class PersonaDTO {
 
+    private Long id;
     private String name;
     private int age;
     private String job;
-    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthdate;
     private String email;
     private String description;
