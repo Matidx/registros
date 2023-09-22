@@ -20,5 +20,7 @@ public interface PersonaRepository extends JpaRepository<Persona, Long> {
 
     // Query Method para buscar personas por edad, ordenadas por edad descendente
     List<Persona> findByOrderByAgeDesc();
+    //devolverá una lista de personas ordenadas primero por edad ascendente y luego por nombre ascendente
+    List<Persona> findAllByOrderByAgeAscNameAsc();
 }
 

@@ -38,6 +38,11 @@ public class PersonaController {
         List<PersonaDTO> personas = personaService.getPersonasSortedByAge(ascending);
         return new ResponseEntity<>(personas, HttpStatus.OK);
     }
+    @GetMapping("/sort/age-name")
+    public ResponseEntity<List<PersonaDTO>> sortPersonasByAgeAndName() {
+        List<PersonaDTO> personas = personaService.getAllPersonasOrderedByAgeAndName();
+        return ResponseEntity.ok(personas);
+    }
 
     @PostMapping
     public ResponseEntity<PersonaDTO> savePersona(@RequestBody PersonaDTO personaDTO) {

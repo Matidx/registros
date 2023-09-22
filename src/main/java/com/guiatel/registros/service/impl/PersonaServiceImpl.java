@@ -57,6 +57,12 @@ public class PersonaServiceImpl implements PersonaService {
     }
 
     @Override
+    public List<PersonaDTO> getAllPersonasOrderedByAgeAndName() {
+        List<Persona> personas = personaRepository.findAllByOrderByAgeAscNameAsc();
+        return personaMapper.personasToPersonaDTOs(personas);
+    }
+
+    @Override
     public PersonaDTO updatePersona(Long id, PersonaDTO personaDTO) {
         Optional<Persona> personaOptional = personaRepository.findById(id);
         if (personaOptional.isPresent()) {
