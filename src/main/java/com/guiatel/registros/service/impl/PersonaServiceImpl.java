@@ -57,11 +57,6 @@ public class PersonaServiceImpl implements PersonaService {
     }
 
     @Override
-    public void deletePersona(Long id) {
-        personaRepository.deleteById(id);
-    }
-
-    @Override
     public PersonaDTO updatePersona(Long id, PersonaDTO personaDTO) {
         Optional<Persona> personaOptional = personaRepository.findById(id);
         if (personaOptional.isPresent()) {
@@ -73,5 +68,15 @@ public class PersonaServiceImpl implements PersonaService {
             throw new PersonaNotFoundException("Persona no encontrada con ID: " + id);
         }
     }
+    @Override
+    public void deletePersona(Long id) {
+        Optional<Persona> personaOptional = personaRepository.findById(id);
+        if (personaOptional.isPresent()) {
+            personaRepository.deleteById(id);
+        } else {
+            throw new PersonaNotFoundException("Persona no encontrada con ID: " + id);
+        }
+    }
+
 }
 
