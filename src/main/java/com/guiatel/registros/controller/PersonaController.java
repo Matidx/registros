@@ -1,8 +1,10 @@
 package com.guiatel.registros.controller;
 
 import com.guiatel.registros.dto.PersonaDTO;
-import com.guiatel.registros.service.PersonaService;
+import com.guiatel.registros.service.impl.PersonaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,12 +13,13 @@ import java.util.List;
 @RequestMapping("/api/personas")
 public class PersonaController {
 
-    private final PersonaService personaService;
+    private final PersonaServiceImpl personaService;
 
     @Autowired
-    public PersonaController(PersonaService personaService) {
+    public PersonaController(PersonaServiceImpl personaService) {
         this.personaService = personaService;
     }
+
 
     @GetMapping
     public List<PersonaDTO> getAllPersonas() {
@@ -29,8 +32,9 @@ public class PersonaController {
     }
 
     @PostMapping
-    public void savePersona(@RequestBody PersonaDTO personaDTO) {
-        personaService.savePersona(personaDTO);
+    public ResponseEntity<PersonaDTO> createPersona(@RequestBody PersonaDTO personaDTO) {
+        PersonaDTO savedPersona = personaService.savePersona(personaDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedPersona);
     }
 
     @DeleteMapping("/{id}")

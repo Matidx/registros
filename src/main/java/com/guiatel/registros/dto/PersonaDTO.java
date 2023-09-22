@@ -1,5 +1,7 @@
 package com.guiatel.registros.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 
 public class PersonaDTO {
@@ -8,6 +10,7 @@ public class PersonaDTO {
     private String name;
     private int age;
     private String job;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthdate;
     private String email;
     private String description;
