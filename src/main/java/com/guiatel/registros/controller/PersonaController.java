@@ -27,12 +27,6 @@ public class PersonaController {
         return new ResponseEntity<>(personas, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<PersonaDTO> savePersona(@RequestBody PersonaDTO personaDTO) {
-        PersonaDTO savedPersona = personaService.savePersona(personaDTO);
-        return new ResponseEntity<>(savedPersona, HttpStatus.CREATED);
-    }
-
     @GetMapping("/filter")
     public ResponseEntity<List<PersonaDTO>> filterPersonas(@RequestParam(required = false) Long id, @RequestParam(required = false) String name) {
         List<PersonaDTO> personas = personaService.filterPersonasByIdOrName(id, name);
@@ -43,6 +37,24 @@ public class PersonaController {
     public ResponseEntity<List<PersonaDTO>> sortPersonas(@RequestParam(required = false, defaultValue = "true") boolean ascending) {
         List<PersonaDTO> personas = personaService.getPersonasSortedByAge(ascending);
         return new ResponseEntity<>(personas, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<PersonaDTO> savePersona(@RequestBody PersonaDTO personaDTO) {
+        PersonaDTO savedPersona = personaService.savePersona(personaDTO);
+        return new ResponseEntity<>(savedPersona, HttpStatus.CREATED);
+    }
+    // Método PUT para actualizar una persona por ID
+    @PutMapping("/{id}")
+    public ResponseEntity<PersonaDTO> updatePersona(@PathVariable Long id, @RequestBody PersonaDTO personaDTO) {
+            PersonaDTO updatedPersona = personaService.updatePersona(id, personaDTO);
+            return new ResponseEntity<>(updatedPersona, HttpStatus.OK);
+        }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePersona(@PathVariable Long id) {
+        personaService.deletePersona(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

@@ -2,6 +2,7 @@ package com.guiatel.registros.service.impl;
 
 import com.guiatel.registros.dto.PersonaDTO;
 import com.guiatel.registros.entity.Persona;
+import com.guiatel.registros.exception.PersonaNotFoundException;
 import com.guiatel.registros.mapper.PersonaMapper;
 import com.guiatel.registros.repository.PersonaRepository;
 import com.guiatel.registros.service.PersonaService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonaServiceImpl implements PersonaService {
@@ -54,5 +56,22 @@ public class PersonaServiceImpl implements PersonaService {
         return personaMapper.personasToPersonaDTOs(personas);
     }
 
+    @Override
+    public void deletePersona(Long id) {
+        personaRepository.deleteById(id);
+    }
+
+    @Override
+    public PersonaDTO updatePersona(Long id, PersonaDTO personaDTO) {
+        Optional<Persona> personaOptional = personaRepository.findById(id);
+        if (personaOptional.isPresent()) {
+            Persona persona = personaMapper.personaDTOToPersona(personaDTO);
+            persona.setId(id);
+            Persona updatedPersona = personaRepository.save(persona);
+            return personaMapper.personaToPersonaDTO(updatedPersona);
+        } else {
+            throw new PersonaNotFoundException("Persona no encontrada con ID: " + id);
+        }
+    }
 }
 
