@@ -22,16 +22,13 @@ public class PersonaServiceImpl implements PersonaService {
         this.personaMapper = personaMapper;
     }
 
+    @Override
     public List<PersonaDTO> getAllPersonas() {
         List<Persona> personas = personaRepository.findAll();
-        return this.personaMapper.personasToPersonaDTOs(personas);
+        return personaMapper.personasToPersonaDTOs(personas);
     }
 
-    public PersonaDTO getPersonaById(Long id) {
-        Persona persona = personaRepository.findById(id).orElse(null);
-        return personaMapper.personaToPersonaDTO(persona);
-    }
-
+    @Override
     public PersonaDTO savePersona(PersonaDTO personaDTO) {
         // Mapea la PersonaDTO a una entidad Persona
         Persona persona = personaMapper.personaDTOToPersona(personaDTO);
@@ -43,8 +40,19 @@ public class PersonaServiceImpl implements PersonaService {
         return personaMapper.personaToPersonaDTO(persona);
     }
 
-    public void deletePersona(Long id) {
-        personaRepository.deleteById(id);
+    @Override
+    public List<PersonaDTO> filterPersonasByIdOrName(Long id, String name) {
+        List<Persona> personas = personaRepository.findByIdOrNameContaining(id, name);
+        return personaMapper.personasToPersonaDTOs(personas);
     }
+
+    @Override
+    public List<PersonaDTO> getPersonasSortedByAge(boolean ascending) {
+        List<Persona> personas = ascending
+                ? personaRepository.findByOrderByAgeAsc()
+                : personaRepository.findByOrderByAgeDesc();
+        return personaMapper.personasToPersonaDTOs(personas);
+    }
+
 }
 

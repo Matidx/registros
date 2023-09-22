@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/personas")
 public class PersonaController {
@@ -20,25 +21,28 @@ public class PersonaController {
         this.personaService = personaService;
     }
 
-
     @GetMapping
-    public List<PersonaDTO> getAllPersonas() {
-        return personaService.getAllPersonas();
-    }
-
-    @GetMapping("/{id}")
-    public PersonaDTO getPersonaById(@PathVariable Long id) {
-        return personaService.getPersonaById(id);
+    public ResponseEntity<List<PersonaDTO>> getAllPersonas() {
+        List<PersonaDTO> personas = personaService.getAllPersonas();
+        return new ResponseEntity<>(personas, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<PersonaDTO> createPersona(@RequestBody PersonaDTO personaDTO) {
+    public ResponseEntity<PersonaDTO> savePersona(@RequestBody PersonaDTO personaDTO) {
         PersonaDTO savedPersona = personaService.savePersona(personaDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedPersona);
+        return new ResponseEntity<>(savedPersona, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
-    public void deletePersona(@PathVariable Long id) {
-        personaService.deletePersona(id);
+    @GetMapping("/filter")
+    public ResponseEntity<List<PersonaDTO>> filterPersonas(@RequestParam(required = false) Long id, @RequestParam(required = false) String name) {
+        List<PersonaDTO> personas = personaService.filterPersonasByIdOrName(id, name);
+        return new ResponseEntity<>(personas, HttpStatus.OK);
+    }
+
+    @GetMapping("/sort")
+    public ResponseEntity<List<PersonaDTO>> sortPersonas(@RequestParam(required = false, defaultValue = "true") boolean ascending) {
+        List<PersonaDTO> personas = personaService.getPersonasSortedByAge(ascending);
+        return new ResponseEntity<>(personas, HttpStatus.OK);
     }
 }
+
