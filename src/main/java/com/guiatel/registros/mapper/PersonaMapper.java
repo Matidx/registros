@@ -20,7 +20,7 @@ public interface PersonaMapper {
             @Mapping(target = "name", source = "name"),
             @Mapping(target = "age", source = "age"),
             @Mapping(target = "job", source = "job"),
-            @Mapping(target = "birthdate", source = "birthdate"),
+            @Mapping(target = "cumpleanito", source = "birthdate"),
             @Mapping(target = "email", source = "email"),
             @Mapping(target = "description", source = "description")
     })

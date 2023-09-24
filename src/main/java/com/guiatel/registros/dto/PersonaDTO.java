@@ -11,7 +11,7 @@ public class PersonaDTO {
     private int age;
     private String job;
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate birthdate;
+    private LocalDate cumpleanito;
     private String email;
     private String description;
 
@@ -47,12 +47,12 @@ public class PersonaDTO {
         this.job = job;
     }
 
-    public LocalDate getBirthdate() {
-        return birthdate;
+    public LocalDate getCumpleanito() {
+        return cumpleanito;
     }
 
-    public void setBirthdate(LocalDate birthdate) {
-        this.birthdate = birthdate;
+    public void setCumpleanito(LocalDate cumpleanito) {
+        this.cumpleanito = cumpleanito;
     }
 
     public String getEmail() {
